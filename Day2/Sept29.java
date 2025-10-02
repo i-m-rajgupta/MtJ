@@ -61,9 +61,10 @@ public class Sept29 {
 
         // Write a program where you calculate a = b++ + ++b and c = --b + b--. Print a and c and
         //  decide which one is greater using if-else. 
-       a = b++ + ++b ; 
-       c = --b + b--;
-
+       a = b++ + ++b ; //5  5++ + ++5    5 + 7 =12
+       System.out.println(b);
+       c = --b + b--;    // --7 + 7--   5 + 7 = 12
+        System.out.println(b);
        System.out.println("Value of a and c :"+a+" "+c);
        if(a>c){
         System.out.println(a +" is greater than "+c);
@@ -72,6 +73,7 @@ public class Sept29 {
        }else {
          System.out.println(a +" is equal to "+c);
        }
+
   sc.close();
     }
 }

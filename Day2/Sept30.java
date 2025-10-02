@@ -61,7 +61,7 @@ float s1 = sc.nextFloat();
 float s2 = sc.nextFloat();
 float s3 = sc.nextFloat();
 
-if(s1 > s2+s3 && s2>s1+s3 && s3 >s1+s2){
+if(s1 > s2+s3 || s2>s1+s3 || s3 >s1+s2){
     System.out.println("The triangle is not a valid triangle");
 }else {
    System.out.println("The triangle is valid triangle ");
