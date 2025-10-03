@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
- class demo{
+ public class Oct2{
     public static void main(String [] args){
         // Print numbers from 1 to n in zig-zag form:
         // Example n=10 → 1 10 2 9 3 8 4 7 5 6. n=7 -> 1 7 2 6 3 5 4

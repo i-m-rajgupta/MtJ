@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class demo {
+public class Program2 {
     public static void main(String[] args) {
         //Kaprekar -> 45 -> 2025 -> 4 1 -> 1  0 1
         // 9 -> 81  8 1 99 -> 9801 -> 98  01  45 -> 20 25 999  ->  998001  998 001  10 -> 1  00 65 ->  42 25

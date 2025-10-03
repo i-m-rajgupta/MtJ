@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
- class demo{
+ public class Oct1{
     public static void main(String [] args){
         // Write a program to print the factorial of a number entered by the user.
 
