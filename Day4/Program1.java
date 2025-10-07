@@ -35,5 +35,7 @@ public class Program1 {
         n = n/10;
       }
       System.out.println(count);
+
+      sc.close();
     }
 }

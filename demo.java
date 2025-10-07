@@ -8,5 +8,7 @@ class demo {
     int n = sc.nextInt();
    
     System.out.println();
+
+    sc.close();
     }
 }
