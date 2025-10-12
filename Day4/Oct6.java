@@ -23,7 +23,6 @@ public class Oct6 {
     //  Print all prime factors of a number using a loop and conditional statements.
     int n1 = n;
     temp = n-1;
-    int lastFactor;
     System.out.print("Prime factors are : ");
     while(temp>1){
         if(n %temp == 0){
@@ -78,5 +77,6 @@ for(int i =0;i<n1;i++){
     }
     System.out.println("");
 }
+sc.close();
    }   
 }

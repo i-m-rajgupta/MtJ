@@ -87,6 +87,7 @@ int sq = n*n;
     isKaprekar = true;
    }
    System.out.println(n+" is Kaprekar "+isKaprekar);
+   sc.close();
 
     }
 }
