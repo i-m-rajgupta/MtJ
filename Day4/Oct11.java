@@ -59,6 +59,6 @@ public class Oct11 {
         }else{
                 System.out.println(num+" is not within the specified range  ");
         }
-        sc.close();
+        sc.close(); 
     }
 }
