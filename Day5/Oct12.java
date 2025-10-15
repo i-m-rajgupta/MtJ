@@ -97,5 +97,6 @@ public static void main(String[] args) {
     }else{
         System.out.println("No second smallest exist in the array");
     }
+    sc.close();
 }    
 }
