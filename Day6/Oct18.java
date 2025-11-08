@@ -35,26 +35,70 @@ public class Oct18 {
         System.out.println("Enter the target sum ");
         int k = sc.nextInt();
         int sum =0;
-        for(int i=0;i<arr1.length;i++){
-            sum =0;
-            for(int j=i;j<arr1.length;j++){
-                sum += arr1[j];
+        // for(int i=0;i<arr1.length;i++){
+        //     sum =0;
+        //     for(int j=i;j<arr1.length;j++){
+        //         sum += arr1[j];
                 
+        //         if(sum == k){
+        //             count = j-i+1;
+        //              if(maxcount<count){
+        //               maxcount = count;
+        //               start = i;
+        //               end = j;
+        //              }
+        //         }
+        //     }
+        // }
+        // if(maxcount>0){
+        //     System.out.println("Longest subarray with target sum is : "+maxcount);
+        //     System.out.println(" Starting and Ending Index "+start+" and "+end);
+        // }else{
+        //     System.out.println("Subarray with target sum not exists .");
+        // }
+
+        // Given an array, create its prefix sum array. 
+        
+        int prefix[] = new int[arr1.length];
+        for(int i=0;i<arr1.length;i++){
+            if(i==0){
+                prefix[i] = arr1[i];
+            }else{
+            prefix[i] = prefix[i-1]+arr1[i]; 
+            }
+        }
+        System.out.println("Prefix sum array : ");
+        for(int i=0;i<arr1.length;i++){
+            System.out.println(prefix[i]);
+        }
+
+        // For a given array and multiple queries, find the sum from index l to r using prefix sum.
+        System.out.println("Enter the left and right index");
+        int l=sc.nextInt();
+        int r = sc.nextInt();
+        if(l == 0){
+            sum = prefix[r];
+        }else{
+            sum = prefix[r]-prefix[l-1];
+        }
+        System.out.println("Sum : "+sum);
+        count =0;
+
+        // Count how many subarrays have sum = K.
+        for(int i=0;i<arr1.length;i++){
+            for(int j=0;j<arr1.length;j++){
+                if(i == 0){
+                    sum = prefix[j];
+                }else{
+                    sum = prefix[j]-prefix[i-1];
+                }
                 if(sum == k){
-                    count = j-i+1;
-                     if(maxcount<count){
-                      maxcount = count;
-                      start = i;
-                      end = j;
-                     }
+               count++;
                 }
             }
         }
-        if(maxcount>0){
-            System.out.println("Longest subarray with target sum is : "+maxcount);
-            System.out.println(" Starting and Ending Index "+start+" and "+end);
-        }else{
-            System.out.println("Subarray with target sum not exists .");
-        }
+        System.out.println("There are "+count+" subarray with sum equal to "+k);
+
+        
     }
 }
