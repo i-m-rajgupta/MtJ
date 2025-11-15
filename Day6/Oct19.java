@@ -149,5 +149,6 @@ public class Oct19 {
          System.out.print(res1[i]);
       }
       System.out.println();
+      sc.close();
    } 
 }

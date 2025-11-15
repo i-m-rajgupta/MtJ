@@ -1,4 +1,3 @@
-package Day6;
 
 import java.util.Scanner;
 
@@ -10,13 +9,18 @@ public class Program1 {
 
     // Pattern Question 
 
-     // Write a program to print a square of size n × n using the *.
-    // for(int i=0;i<n;i++){
-    //     for(int j=0;j<n;j++){
-    //         System.out.print('*');
-    //     }
-    //     System.out.println();
-    // }
+    //  Write a program to print a square of size n × n using the *.
+    // n =4  i=0  j=0 to 3      ****
+    //       i=1  j=0 to 3      ****
+    //       i=2  j=0 to 3      ****
+   //        i=3  j=0 to 3      ****
+        
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            System.out.print('*');
+        }
+        System.out.println();
+    }
 
    // ***   =3     =3-0
    // **      =2    =3-1
@@ -60,15 +64,15 @@ public class Program1 {
     //     System.out.println();
     //   }
     
-      for(int i=0;i<n;i++){
-          int charnum = 97;
-        for(int j=0;j<=i;j++){
-              char ch = (char) charnum;
-            System.out.print(ch);
-             charnum++;
-        }
-        System.out.println();
-    }
+    //   for(int i=0;i<n;i++){
+    //       int charnum = 97;
+    //     for(int j=0;j<=i;j++){
+    //           char ch = (char) charnum;
+    //         System.out.print(ch);
+    //          charnum++;
+    //     }
+    //     System.out.println();
+    // }
      //  *
     //   *
     // *****
