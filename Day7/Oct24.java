@@ -35,7 +35,10 @@ public class Oct24 {
 
     //   Trim leading and trailing spaces from a string (trim()). 
         String s3 = "   hello";
-        String s4 = ""
         System.out.println("Trimmed : "+s3.trim()); 
+
+        // Replace all spaces with underscores (replace(" ", "_")). 
+        String s4 = "I Like Coding";
+        System.out.println(s4.replace(" ", "_"));
     }
 }
