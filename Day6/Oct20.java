@@ -34,49 +34,109 @@ public class Oct20 {
         // }
 
          start =0;end=0;startIdx=0;endIdx=0;
-         int minLen =Integer.MAX_VALUE,count=0;
-         int reqFreq[] = new int[256];
         //  Find the smallest substring of s that contains all characters of t.
-        System.out.println("Enter the string to be found : ");
-        String t = sc.next();
-        for(int i=0;i<t.length();i++){
-             reqFreq[t.charAt(i)]++; 
-        }
+        // System.out.println("Enter the string to be found : ");
+        // String t = sc.next();
+        int length =Integer.MAX_VALUE;
+        String s1 ="";
+        // for(int i =0;i<s.length();i++){
+        //     for(int j=i+1;j<=s.length();j++){
+        //     String str = s.substring(i, j);
+        //     char arr[] = t.toCharArray();
+        //     for(int k=0;k<str.length();k++){
+        //        char ch = str.charAt(k);
+        //        for(int l=0;l<arr.length;l++){
+        //              if(ch == arr[l]){
+        //                 arr[l] = '=';
+        //             }
+        //        }
+                
+        //     }
+        //     String res = new String(arr);
+        //     String check = "";
+        //     for(int p=0;p<t.length();p++){
+        //         check += "=";
+        //     }
+        //      if(res.equals(check) && length>str.length()){
+        //         length = str.length();
+        //         s1 = str;
+        //      }
+        //     }
+        // }
 
-           for(int i=0;i<t.length();i++){
-            System.out.print( t.charAt(i)+""+reqFreq[t.charAt(i)]+" "); 
-        }
-        
-        for(end =0;end<s.length();end++){
-            char ch = s.charAt(end);
+        // System.out.println("Smallest substring of s that contains all characters of t : "+s1);
 
-            if(reqFreq[ch] != 0){
-                freq[ch]++;
-                if(reqFreq[ch] == freq[ch]){
-                count++;
-                }
+        //  Count of substrings with exactly k unique characaters 
+        // System.out.println("Enter the value of k : ");
+        // int k = sc.nextInt();
+        // int substring = 0,count=0;
+        // for(int i =0;i<s.length();i++){
+        //     for(int j=i+1;j<=s.length();j++){
+        //      String str = s.substring(i, j);
+        //      count =0;
+        //      int map[] = new int[256];
+        //      for(int l=0;l<str.length();l++){
+        //         char ch = str.charAt(l);
+        //       if(map[ch] == 0){
+        //         map[ch]++;
+        //         count++;
+        //       }
+        //      }
+        //        if(count == k){
+        //         substring++;
+        //       }
+        //     }
+        // }
+        // System.out.println("Count of substrings with exactly k unique characaters "+substring);
+
+        // Longest substring with vowels only
+        // length =0;
+        //   for(int i =0;i<s.length();i++){
+        //     for(int j=i+1;j<=s.length();j++){
+        //      String str = s.substring(i, j);
+        //     str =  str.toLowerCase();
+        //     String res = "";
+        //     for(int p=0;p<str.length();p++){
+        //       char ch = str.charAt(p);
+        //       if(ch == 'a'|| ch == 'e'||ch=='i'||ch == 'o'||ch=='u'){
+        //         res += ch;
+        //       }else{
+        //         break;
+        //       }
+        //     }
+        //     if(res.length()>length){
+        //         length = res.length();
+        //         s1 = res;
+        //     }
+        //     }
+        // }
+        // System.out.println("Longest substring with vowels only : "+s1);
+
+        // Longest substring with Distinct characters in lexicographical order 
+        length = 0;
+        s1 ="";
+        for(int i =0;i<s.length();i++){
+         for(int j=i+1;j<=s.length();j++){
+          String str = s.substring(i,j);
+          String res = "";
+           for(int p=0;p<str.length();p++){
+            char ch = str.charAt(p);
+            if(p == str.length()-1){
+                res += ch; 
+                break;
             }
-            if(reqFreq[ch] != 0 && count == t.length()-1 && reqFreq[ch] < freq[ch]) {
-                for(int i=start;i<end;i++){
-                    char c = s.charAt(i);
-                    if(reqFreq[c] != 0 && reqFreq[c] == freq[c]){
-                        break;
-                    }
-                    if(reqFreq[c] !=0 && reqFreq[c] < freq[c]){
-                        freq[c]--;
-                        start = i+1;
-                    }           
-                }
+            if(ch < str.charAt(p+1)){
+               res += ch;    
+            }else{
+              break;
             }
-          if(count == t.length()-1 && minLen>end-start+1){
-               minLen = end-start+1;
-               startIdx = start;
-               endIdx = end;
-          }
+           }
+           if(length<res.length()){
+            length = res.length();
+            s1 = str;
+           }
+         }
         }
-        System.out.println("Minimum length of substring containing all chars of t : "+minLen+" and substring : ");
-        for(int i=startIdx;i<=endIdx;i++){
-            System.out.print(s.charAt(i));
-        }
+        System.out.println("Longest substring with Distinct characters in lexicographical order : "+s1);
     } 
 }
