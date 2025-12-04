@@ -89,6 +89,127 @@ class Team{
     }
     
 }
+
+class Project{
+    String name;
+    String leader;
+    int day;
+
+    Project(String name,String leader,int day){
+        this.name = name;
+        this.day = day;
+        this.leader = leader;
+    }
+
+    void display(){
+        System.out.println(name+" project is under "+leader+" and should complete in "+day+" days");
+    }
+}
+class Company{
+    String name;
+    int reveueGenerated;
+    List<Project> projects = new ArrayList<>() ;
+
+    Company(String name,int reveueGenerated){
+        this.name = name;
+        this.reveueGenerated = reveueGenerated;
+    }
+
+    void addProject(Project p){
+        projects.add(p);
+    }
+
+    void display(){
+        System.out.println(name+" company has generated "+reveueGenerated+" revenue in last year and it is currently working on this projects : ");
+        if(projects.size() == 0){
+            System.out.println("No Project has added .Add some using addProject()");
+            return;
+        }
+        for(Project p : projects){
+            p.display();
+        }
+    }
+}
+
+class Student{
+    String name;
+    int id;
+
+    Student(String name,int id){
+        this.name = name;
+        this.id = id;
+    }
+
+    void display(){
+        System.out.println(name+" is enrolled with Student ID : "+id);
+    }
+}
+
+class University{
+    String name ;
+
+    List<Student> students;
+    University(String name,List<Student> students){
+        this.name = name;
+        this.students = students;
+    }
+
+    void display(){
+        System.out.println("Student enrolled in "+name+" University ");
+        if(students.size() == 0){
+            System.out.println("No student has enrolled ");
+            return;
+        }
+       for(Student s  : students){
+            s.display();
+        }
+    }
+
+}
+
+class Account{
+    String name;
+    static int count=200014400;
+    int accountNo ;
+
+    Account(String name){
+        this.name = name;
+        addAccount();
+    }
+
+    void addAccount(){
+        count++;
+       accountNo = count;
+    }
+   
+   void display(){
+        System.out.println(name+" has account with "+accountNo+" Account Number.");
+    }
+}
+
+class Bank{
+    String name;
+    List<Account> accounts = new ArrayList<>();
+    Bank(String name){
+        this.name = name;
+    }
+
+    void addAccount(Account a){
+        accounts.add(a);
+    }
+
+    void display(){
+            if(accounts.size() == 0){
+            System.out.println("No Information available right now.");
+            return;
+        }
+        System.out.println(name+" Bank has these account ");
+    
+        for(Account a : accounts){
+            a.display();
+        }
+    }
+}
 public class Nov14 {
     public static void main(String[] args) {
         // Create class Department and class Employee. A Department has multiple Employees (but Employees can exist even without
@@ -120,5 +241,27 @@ public class Nov14 {
                 t.details();
 
                 // Create class Company and class Project. A Company works on many Projects (Project can exist independently). 
+              Project pro1 = new Project("Apna", "Satyam", 45);
+              Project pro2 = new Project("Fired", "Nitin", 70);
+              Company apna = new Company("Apna Sapna money money", 520000);
+              apna.addProject(pro2);
+              apna.addProject(pro1);
+              apna.display();
+               
+            //    Create class University and class Student. A Student can exist without the University (Aggregation).
+
+            Student s = new Student("Shailu", 1);
+            List<Student> students = new ArrayList<>();
+            students.add(s);
+            University u = new University("RGPV",students);
+            u.display();
+
+            // Create class Bank and class Account. An Account exists independent of Bank object. 
+            Account a1 = new Account("Rohan");
+            Account a2 = new Account("Chandu");
+            Bank b = new Bank("IOB");
+            b.addAccount(a1);
+            b.addAccount(a2);
+            b.display();
     }
 }
