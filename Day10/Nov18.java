@@ -82,6 +82,94 @@ class Company{
         }
     }
 }
+
+class Hospital{
+    String name;
+    String owner;
+    List<Doctor> doctors = new ArrayList<>();
+    List<Record> records = new ArrayList<>();
+    Hospital(String name,String owner){
+    this.name = name;
+    this.owner = owner;
+    }
+  
+    class Doctor{
+      String name;
+      String quali;
+      int salary;
+
+      Doctor(String name,String quali,int salary){
+        this.name = name;
+        this.quali = quali;
+        this.salary = salary;
+      }
+
+      void details(){
+        System.out.println("Doctor details : ");
+        System.out.println("Name -> "+name);
+        System.out.println("Qualifications -> "+quali);
+        System.out.println("Salary -> "+salary);
+      }
+    }
+
+    static class Record{
+    String name;
+    int age;
+    String add;
+
+    Record(int age,String name,String add){
+        this.age = age;
+        this.name = name;
+        this.add = add;
+    }
+    void details(){
+        System.out.println("Patient details : ");
+        System.out.println("Name -> "+name);
+        System.out.println("Age -> "+age);
+        System.out.println("Address -> "+add);
+    }
+    }
+
+
+    void addDoctors(Doctor d){
+        doctors.add(d);
+    }
+    void addRecords(Record r){
+        records.add(r);
+    }
+ 
+    void getDoctorDetails(){
+        if(doctors.size() == 0){
+            System.out.println("No Information  available");
+            return;
+        }
+       for(Doctor d : doctors){
+            d.details();
+        }
+    }
+
+    void getRecord(){
+        if(records.size() == 0){
+            System.out.println("No information available ");
+            return;
+        }
+        for(Record r : records){
+            r.details();
+        }
+    }
+      void details(){
+        System.out.println(name+" Hospital is owned by "+owner);
+        getDoctorDetails();
+        getRecord();
+    }
+
+     interface Emergency{
+    void emergency(String msg);
+    }
+    
+    }
+
+
 public class Nov18 {
     public static void main(String[] args) {
         // Create an interface Greetings with method sayHello(). Use anonymous inner class to print “Hello Java!”.
@@ -129,6 +217,23 @@ public class Nov18 {
         it.details();
 
         // Create a real-world example: Hospital class with: Inner class: Doctor Static nested class: Record Anonymous inner class: for emergency alert 
- 
+        Hospital h = new Hospital("Nirogaya ","Mukesh ");
+        Hospital.Doctor d1 = h.new Doctor("Sachin", "MBBS", 80000);
+        Hospital.Doctor d2 = h.new Doctor("Munni", "Nursing ", 50000);
+        Hospital.Record r1 = new Hospital.Record(25,"Ruchi","MAlipura Ujjain");
+        Hospital.Record r2 = new Hospital.Record(45, "Savita", "Sehore");
+        h.addDoctors(d1);
+        h.addDoctors(d2);
+        h.addRecords(r2);
+        h.addRecords(r1);
+        h.details();
+       
+        Hospital.Emergency e = new Hospital.Emergency() {
+           public void emergency(String msg){
+                System.out.println("Emergency alert : "+msg);
+            }
+        };
+        e.emergency("Fire occured in f-bolck Building ");
+
     }
 }
