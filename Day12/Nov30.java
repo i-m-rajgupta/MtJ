@@ -123,9 +123,10 @@ public class Nov30 {
         // Compute the sum of principal diagonal elements in a matrix.
         System.out.println("Sum : "+sum(matrix, 0, 0));
 
+        // Solve N-Queens problem recursively.
         int chessboard[][] = new int[4][4];
         nqueens(chessboard, 0);
 
-        
+        // Solve Sudoku using recursion.
     }
 }
