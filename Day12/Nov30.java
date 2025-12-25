@@ -111,6 +111,67 @@ public class Nov30 {
             }
         }   
     }
+
+    public static boolean isValid(int sudoku[][],int top,int left,int num){
+      
+           for(int j=0;j<sudoku.length;j++){
+            if(sudoku[top][j] == num || sudoku[j][left] == num ){
+               return false;
+            }
+           }
+
+
+           int row = (top/3)*3;
+           int col = (left/3)*3;
+           for(int j=row;j<row+3;j++){
+            for(int k= col;k<col+3;k++){
+                if(sudoku[j][k] == num){
+                    return false;
+                }
+            }
+           }
+
+         return true;
+    }
+
+    public static void printSudoku(int sudoku[][]){
+        for(int i =0;i<sudoku.length;i++){
+            for(int j=0;j<sudoku[0].length;j++){
+                 System.out.print(sudoku[i][j]+" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
+   public static boolean sudokuSolver(int sudoku[][],int row,int col){
+        if(row == sudoku.length){
+            printSudoku(sudoku);
+            return true; 
+        }
+
+        if(col == sudoku[0].length){
+            return sudokuSolver(sudoku, row+1, 0);
+        }
+
+        if(sudoku[row][col] != 0){
+                return sudokuSolver(sudoku, row, col+1);
+        }
+
+           for(int j=1;j<=sudoku[0].length;j++){
+                if(isValid(sudoku, row, col, j)){
+                    sudoku[row][col] = j;
+
+                    if(sudokuSolver(sudoku, row, col+1)){
+                        return true;
+                    }
+
+                    sudoku[row][col] = 0;
+                }
+           }  
+           return false;
+   }
+
     public static void main(String[] args) {
         // Count ways to climb stairs with variable jumps.
         System.out.println( climb(4,0));
@@ -128,5 +189,22 @@ public class Nov30 {
         nqueens(chessboard, 0);
 
         // Solve Sudoku using recursion.
+       int sudoku[][] = {
+       {5 ,3, 0, 0, 7, 0 ,0, 0, 0},
+       {6 ,0 ,0 ,1 ,9 ,5 ,0 ,0 ,0},
+       {0, 9, 8, 0 ,0 ,0 ,0 ,6, 0},
+       {8 ,0 ,0 ,0 ,6 ,0 ,0 ,0 ,3},
+       {4 ,0, 0, 8, 0, 3, 0, 0, 1},
+       {7, 0 ,0 ,0 ,2 ,0 ,0 ,0 ,6},
+       {0 ,6 ,0 ,0, 0, 0 ,2 ,8 ,0},
+       {0 ,0 ,0 ,4 ,1 ,9 ,0 ,0, 5},
+       {0, 0, 0, 0, 8, 0, 0, 7, 9},
+       };
+
+        
+
+       sudokuSolver(sudoku, 0, 0);
+    //  System.out.println( numberFinder(sudoku1, 0, 6));
+
     }
 }
