@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 public class Dec1 {
     public static void print(ArrayList<Integer> arr,int idx){
@@ -66,6 +68,59 @@ public class Dec1 {
         }
     }
     public static void main(String[] args) {
+        // Given an ArrayList<Integer>, perform the following operations in sequence:
+        ArrayList<Integer> list = new ArrayList<>();
+          list.add(5);
+          list.add(6);
+              list.add(7);
+                  list.add(8);
+                      list.add(9);
+                      list.add(3);
+          list.add(4,90);
+
+         System.out.println("Element at index 1 : "+list.get(1)); 
+         System.out.println("Element at index 3 : "+list.get(3));  
+
+         
+         System.out.println("Element at index 2 : "+list.set(2,90));
+         
+         System.out.println("Removed element from 3 : "+list.remove(3));
+         System.out.println("Remove element of value 90 : "+list.remove(Integer.valueOf(90)));
+
+         System.out.println("Contains : 25 "+list.contains(25));
+         System.out.println("At index  "+list.indexOf(3)+" , 3 is present");
+          System.out.println("At index "+list.lastIndexOf(3)+" , last 3 is present ");
+
+          System.out.println("Size of arraylist : "+list.size());
+          System.out.println("Is empty "+list.isEmpty());
+
+          System.out.println("Iteration using the simple for loop : ");
+          for(int i=0;i<list.size();i++){
+            System.out.println(list.get(i));
+          }
+
+          System.out.println("Using enhanced for loop ");
+          for(int num : list){
+            System.out.println(num);
+          }
+
+          System.out.println("Using Iterator ");
+          Iterator<Integer> it = list.iterator();
+          while (it.hasNext()) {
+            System.out.println(it.next()+" ");
+          }
+
+          Collections.sort(list);
+          System.out.println("Sorted "+list);
+
+          Collections.reverse(list);
+          System.out.println("Reverse : "+list);
+
+          System.out.println(list.subList(2, 4));
+          
+          list.clear();
+          System.out.println(list);
+
         // Print all elements of an ArrayList in reverse order recursively.
          ArrayList<Integer> arr = new ArrayList<>();
          arr.add(45);
@@ -91,5 +146,7 @@ public class Dec1 {
 
     //   Count the number of even/odd elements.
      count(arr2, 0, 0, 0);
+
+     
     }    
 }
