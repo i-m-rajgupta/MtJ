@@ -91,6 +91,16 @@ public class Dec2 {
        moveNegative(arr, pos, idx+1);
     }
 
+    public static void rotate(ArrayList<Integer> arr,int count,int pos){
+        if( count == pos || pos >= arr.size()){
+            System.out.println("Rotated array : "+arr);
+            return;
+        }
+
+        int last = arr.remove(arr.size()-1);
+        arr.add(0,last);
+         rotate(arr, count+1, pos);
+    }
     public static void main(String[] args) {
         // Merge two ArrayLists recursively.
         ArrayList<Integer> arr1 = new ArrayList<>();
@@ -128,10 +138,13 @@ public class Dec2 {
         arr4.add(-899);
         arr4.add(965);
         arr4.add(-785);
+        System.out.println(arr4.getClass());
 
         moveNegative(arr4, 0, 0);
 
         // Rotate an ArrayList by k positions.
+        rotate(arr4, 0, 1);
 
+        
     }
 }
