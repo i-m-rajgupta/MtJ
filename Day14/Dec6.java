@@ -80,6 +80,7 @@ public class Dec6 {
      }
 
       private static double EPSILON = 1e-6; 
+      static int count = 0;
     static class Numexpr {
             double value ;
             String expr;
@@ -90,6 +91,7 @@ public class Dec6 {
     }
 
     public static ArrayList<Numexpr> compute(Numexpr a,Numexpr b){
+        count++;
             ArrayList<Numexpr> result = new ArrayList<>();
             result.add(new Numexpr((a.value+b.value),"("+a.expr+"+"+b.expr+")"));
              result.add(new Numexpr((a.value-b.value),"("+a.expr+"-"+b.expr+")"));
@@ -143,6 +145,67 @@ public class Dec6 {
       HashSet<String> Solutions = new HashSet<>();
       findExpression(number, target, Solutions);
       return Solutions;
+    }
+
+    public static void printIp(int res[]){
+        for(int i = 0;i<res.length;i++){
+            if(i == 3){
+                System.out.print(res[i]);
+            }else{
+                System.out.print(res[i]+".");
+            }
+        }
+        System.out.println();
+    }
+    public static void validIp(String str,int [] res,int idx,int part){
+        if(part == 4 && idx == str.length()){
+            printIp(res);
+            return;
+        }
+
+        if(part == 4|| idx ==str.length() ){
+            return;
+        }
+        for(int len =1;len <= 3 && idx+len <= str.length();len++){
+          String sub = str.substring(idx, idx+len);
+          
+          if(sub.length()>1 && sub.charAt(0) == '0'){
+            continue;
+          }
+
+          int num = Integer.parseInt(sub);
+          if(num<= 255){
+            res[part] = num;
+            validIp(str, res, idx+len, part+1);
+          }
+        }
+    }
+
+    public static void printPath(int [][] path){
+        for(int i =0;i<path.length;i++){
+            for(int j =0;j<path.length;j++){
+                System.out.print(path[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public static void ratMaze(int[][] maze,int[][] path,int row,int col){
+        if(row == maze.length-1 && col == maze.length-1){
+           path[row][col] = 1;
+           printPath(path);
+             path[row][col] = 0;
+           return ;
+        }
+
+        if(row<0||col<0||row>= maze.length|| col>=maze[0].length|| maze[row][col] == 0){
+            return ;
+        }
+
+        path[row][col] = maze[row][col];
+        ratMaze(maze, path, row+1, col);
+        ratMaze(maze, path, row, col+1);
+        path[row][col] = 0;
     }
     public static void main(String[] args) {
         // Word search in a 2D grid
@@ -204,8 +267,33 @@ public class Dec6 {
     }
    }
 
+   System.out.println("Count "+count);
 
-   
+//    Find all valid IP addresses from a string
+int arr[] = new int[4];
+   String str = "10101010";
+   validIp(str, arr, 0, 0);
+
+//    Rat in a maze (all paths)
+ int[][] maze1 = {
+            {1, 0, 0, 0},
+            {1, 1, 0, 1},
+            {0, 1, 0, 0},
+            {1, 1, 1, 1}
+        };
+
+         int[][] maze2 = {
+            {1, 1, 1, 0, 1, 1, 1, 1},
+            {0, 1, 1, 1, 1, 0, 1, 0},
+            {1, 1, 1, 1, 0, 1, 1, 1},
+            {1, 0, 0, 1, 1, 1, 0, 1},
+            {1, 1, 1, 0, 1, 0, 1, 1},
+            {0, 1, 0, 1, 1, 1, 1, 0},
+            {1, 1, 1, 1, 0, 1, 1, 1},
+            {0, 0, 1, 1, 1, 1, 0, 1}
+        };
+        ratMaze(maze1, new int[maze1.length][maze1[0].length], 0, 0);
+        ratMaze(maze2, new int[maze2.length][maze2[0].length], 0, 0);
     }
     }
 
