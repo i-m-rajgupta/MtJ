@@ -193,5 +193,9 @@ public class Dec8 {
         linkedList2.addLast(8);
         linkedList2.add(9);
         System.out.println(linkedList2);
+        System.out.println( linkedList2.get(0));
+        System.out.println(linkedList2.contains(7));
+        System.out.println(linkedList2.isEmpty());
+        System.out.println(linkedList2.removeFirst());
    }    
 }
