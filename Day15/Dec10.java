@@ -137,7 +137,7 @@ class MyLinkedList {
     }
 
     public void rotate(int k){
-       if(head == null && head.next != null || k<= 0){
+       if(head == null && head.next == null || k<= 0){
         return ;
        }
 
@@ -163,8 +163,146 @@ class MyLinkedList {
        tail.next = head;
        head = newHead;
     }
+
+    public Node copyList(Node temp){
+        if(temp == null){
+            return null;
+        }
+        Node newHead = new Node(temp.data);
+        Node currNew = newHead;
+         Node oldCurr = temp;
+
+         while (oldCurr.next != null) {
+              Node tempNext = new Node(oldCurr.data);
+              currNew.next = tempNext;
+              currNew = currNew.next;
+              oldCurr = oldCurr.next;
+         }
+
+         return newHead;
+    }
 }
+
+
 public class Dec10 {
+    public static MyLinkedList mergeSorted(MyLinkedList list1,MyLinkedList list2){
+           MyLinkedList mergedlist = new MyLinkedList();
+           if(list1.head == null && list2.head == null){
+            return new MyLinkedList();
+           }
+           if(list1.head == null){
+            mergedlist.head = mergedlist.copyList(list2.head);
+             return mergedlist;
+           }
+
+           if(list2.head == null){
+            mergedlist.head = mergedlist.copyList(list1.head);
+            return mergedlist;
+           }
+
+        
+           Node curr1 = list1.head;
+           Node curr2 = list2.head;
+            Node temp;
+           if(curr1.data < curr2.data){
+            temp = new Node(curr1.data);
+            mergedlist.head = temp;
+            curr1 = curr1.next;
+           }else{
+            temp = new Node(curr2.data);
+            mergedlist.head = temp;
+            curr2 = curr2.next;
+           }
+
+           Node curr = mergedlist.head;
+           while (curr1 != null && curr2 != null) {
+              if(curr1.data < curr2.data){
+                temp= new Node(curr1.data);
+                curr.next =temp;
+                curr = curr.next;
+                curr1 = curr1.next;
+              }else{
+                temp = new Node(curr2.data);
+                curr.next =temp;
+                curr = curr.next;
+                curr2 = curr2.next;
+              }
+           }
+
+           while (curr1 != null) {
+            temp = new Node(curr1.data);
+            curr.next = temp;
+            curr = curr.next;
+            curr1 = curr1.next;
+           }
+
+           while (curr2 != null) {
+            temp = new Node(curr2.data);
+            curr.next = temp;
+            curr = curr.next;
+            curr2 = curr2.next;
+           }
+
+           return mergedlist;
+    }
+
+    public static boolean isPresent(Node head,int data){
+        if(head == null){
+            return false;
+        }
+
+        Node curr = head;
+        while (curr != null) {
+            if(curr.data == data){
+                return true;
+            }
+            curr = curr.next;
+        }
+        return false;
+    }
+
+    public static MyLinkedList union(MyLinkedList list1,MyLinkedList list2){
+            MyLinkedList unionList = new MyLinkedList();
+           if(list1.head == null && list2.head == null){
+            return new MyLinkedList();
+           }
+        
+           Node curr1 = list1.head;
+           while (curr1 != null) {
+            if(!isPresent(unionList.head, curr1.data)){
+                unionList.add(curr1.data);
+            }
+            curr1 = curr1.next;
+           }
+
+           Node curr2 = list2.head;
+
+           while (curr2 != null) {
+             if(!isPresent(unionList.head, curr2.data)){
+                  unionList.add(curr2.data);
+             }
+             curr2 = curr2.next;
+           }
+        
+           return unionList;
+    }
+
+    public static MyLinkedList intersection(MyLinkedList list1,MyLinkedList list2){
+        MyLinkedList intersection = new MyLinkedList();
+        if(list1.head == null && list2.head == null){
+            return new MyLinkedList();
+        }
+
+        Node curr1 = list1.head;
+        Node curr2 = list2.head;
+        while (curr1 != null) {
+            if(isPresent(curr2, curr1.data) && !isPresent(intersection.head, curr1.data)){
+              intersection.add(curr1.data);
+            }
+            curr1 = curr1.next;
+        }
+        return intersection;
+    }
     public static void main(String[] args) {
         // Detect and Remove a loop/cycle in a linked list.
         MyLinkedList linkedList = new MyLinkedList();
@@ -212,5 +350,27 @@ public class Dec10 {
         linkedList.rotate(10);
         linkedList.print();
 
+        // Merge two sorted linked lists into one sorted list.
+        MyLinkedList list3 = new MyLinkedList();
+        MyLinkedList list4 = new MyLinkedList();
+        MyLinkedList res = new MyLinkedList();
+        list3.add(1);
+        list3.add(1);
+        list3.add(2);
+        list3.add(4);
+        list3.add(5);
+        list4.add(2);
+        list4.add(3);
+        list4.add(3);
+        res = mergeSorted(list3, list4);
+        System.out.println("Merged list Sorted list : ");
+        res.print();
+        
+        // Find the union and intersection of two linked lists.
+         res = union(list3, list4);
+         res.print();
+
+        res = intersection(list3, list4);
+        res.print();
     }
 }
