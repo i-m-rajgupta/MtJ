@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.ListIterator;
+
 class Node{
     int data;
     Node prev;
@@ -401,6 +404,13 @@ class DoublyLinkedList2{
      }
 }
 public class Dec11b {
+    public static void displayReverse(LinkedList<Integer> list){
+         ListIterator<Integer> itr = list.listIterator(list.size());
+         while (itr.hasPrevious()) {
+            System.out.print(itr.previous()+" ");
+         }
+         System.out.println();
+    }
     public static void main(String[] args) {
 //        Create a class DoublyLinkedList that implements a doubly linked list of integers using another class Node, which contains the following attributes:
 // •	data
@@ -479,6 +489,20 @@ public class Dec11b {
 //  	Count and display the total number of nodes in the list.
 
 
-     
+       LinkedList<Integer> list3 = new LinkedList<>();
+       list3.addFirst(4);
+       list3.addFirst(3);
+        list3.addLast(5);
+        list3.addLast(6);
+        list3.add(4, 7);
+        System.out.println(list3);
+        list3.removeFirst();
+        list3.removeLast();
+        list3.remove(2);
+        System.out.println(list3);
+        System.out.println(list3.indexOf(4));
+        System.out.println(list3.indexOf(7));
+        displayReverse(list3);
+        System.out.println(list3.size());
     }
 }

@@ -1,4 +1,3 @@
-import javax.management.RuntimeErrorException;
 
 class DoublyLinkedList<T>{
     private static class Node<T> {
@@ -97,7 +96,7 @@ class DoublyLinkedList<T>{
         }
 
         Node<T> curr = head;
-        while (curr != null && !curr.data.equals(data)) {
+        while (curr != null && (curr.data == null ? data != null : !curr.data.equals(data))) {
             curr = curr.next;
         }
 
@@ -126,7 +125,7 @@ class DoublyLinkedList<T>{
         Node<T> curr = head;
 
         while (curr != null) {
-            if(curr.data.equals(data)){
+            if((curr.data == null ? data == null : curr.data.equals(data))){
                 return index;
             }
             curr = curr.next;
@@ -259,7 +258,7 @@ class MyLinkedList<T>{
          Node<T> curr = head;
          Node<T> prev = null;
 
-         while (curr != null && curr.data.equals(data)) {
+         while (curr != null && (curr.data == null ? data != null : !curr.data.equals(data))) {
             prev = curr;
             curr = curr.next;
          }
@@ -286,7 +285,7 @@ class MyLinkedList<T>{
         Node<T> curr = head;
         int idx =0;
         while (curr != null )  {
-            if(curr.data.equals( data)){
+            if((curr.data == null ? data == null : curr.data.equals(data))){
                 return idx;
             }
             curr = curr.next;
@@ -316,7 +315,7 @@ class MyLinkedList<T>{
 
     public void printForward(){
         if(isEmpty()){
-            throw new RuntimeException("List is Empty");
+           return;
         }
 
         Node<T> curr = head;
@@ -343,7 +342,7 @@ class MyLinkedList<T>{
 
     public void printBackward(){
         if(isEmpty()){
-            throw new RuntimeException("List is Empty ");
+            return;
         }
           printBackward(head);
             System.out.println();
@@ -381,5 +380,11 @@ public class Program2 {
         list2.reverse();
         list2.printForward();
         list2.printBackward();
+MyLinkedList<Character> list3 = new MyLinkedList<>();
+list3.insertAtEnd('a');
+list3.insertAtEnd(null);
+System.out.println(list3.indexOf(null));
+// list3.delete(null);
+list3.printBackward();        
     }
 }
