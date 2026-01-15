@@ -1,3 +1,5 @@
+import javax.management.RuntimeErrorException;
+
 class DoublyLinkedList<T>{
     private static class Node<T> {
         T data;
@@ -177,6 +179,177 @@ class DoublyLinkedList<T>{
    }
 }
 
+class MyLinkedList<T>{
+    private static class Node<T> {
+          T data;
+          Node<T> next;
+        
+          Node(T data){
+            this.data =data;
+          }
+    }
+
+    Node<T> head;
+    int size;
+
+    public boolean isEmpty(){
+        return size == 0;
+    }
+
+    public int size(){
+        return size;
+    }
+
+    public T getHead(){
+        if(isEmpty()){
+            throw new RuntimeException("List is Empty");
+        }
+        return head.data;
+    }
+
+    public void insertAtBeginning(T data){
+        Node<T> newNode = new Node<>(data);
+        if(!isEmpty()){
+            newNode.next = head;
+        }
+         head = newNode;
+         size++;
+    }
+
+    public void insertAtEnd(T data){
+       Node<T> newNode = new Node<>(data);
+       if(isEmpty()){
+         head = newNode;
+       }else{
+       Node<T> curr = head;
+       while (curr.next != null) {
+          curr = curr.next;
+       }
+       curr.next = newNode;
+    }
+    size++;
+    }
+
+    public void insert(T data,int pos){
+        Node<T> newNode = new Node<>(data);
+        if(pos < 0 || pos>size){
+            throw new RuntimeException("Invalid position ");
+        }
+        if(isEmpty() || pos == 0){
+            insertAtBeginning(data);
+            return;
+        }
+
+        Node<T> curr = head;
+ 
+        for(int i =0;i<pos-1;i++){
+            curr = curr.next;
+        }
+        
+           newNode.next = curr.next;
+           curr.next = newNode;
+           size++;
+    }
+
+    public boolean delete(T data){
+         if(isEmpty()){
+            return false;
+         }
+
+         Node<T> curr = head;
+         Node<T> prev = null;
+
+         while (curr != null && curr.data.equals(data)) {
+            prev = curr;
+            curr = curr.next;
+         }
+
+         if(curr == null){
+            return false;
+         }
+
+         if(prev != null){
+                 prev.next = curr.next;
+         }else{
+            head = curr.next;
+         }
+  
+         size--;
+         return true;
+    }
+
+    public int indexOf(T data){
+        if(isEmpty()){
+            return -1;
+        }
+
+        Node<T> curr = head;
+        int idx =0;
+        while (curr != null )  {
+            if(curr.data.equals( data)){
+                return idx;
+            }
+            curr = curr.next;
+            idx++;
+        }
+      return -1;
+    }
+
+    public void reverse(){
+        if(head == null || head.next == null){
+            return;
+        }
+
+        Node<T> curr = head;
+        Node<T> prev = null;
+
+        while (curr != null) {
+            Node<T> nextTemp = curr.next;
+            curr.next = prev;
+
+            prev = curr;
+            curr = nextTemp;
+        }
+
+        head = prev;
+    }
+
+    public void printForward(){
+        if(isEmpty()){
+            throw new RuntimeException("List is Empty");
+        }
+
+        Node<T> curr = head;
+        while (curr != null) {
+            System.out.print(curr.data);
+            if(curr.next != null){
+                System.out.print("->");
+            }
+            curr = curr.next;
+        }
+        System.out.println();
+    }
+
+    private void printBackward(Node<T> node){
+         if(node == null){
+           return;
+         }
+         printBackward(node.next);
+         System.out.print(node.data);
+         if(node != head){
+         System.out.print("<-");
+         }
+    }
+
+    public void printBackward(){
+        if(isEmpty()){
+            throw new RuntimeException("List is Empty ");
+        }
+          printBackward(head);
+            System.out.println();
+    }
+}
+
 public class Program2 {
     public static void main(String[] args) {
         DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
@@ -190,5 +363,23 @@ public class Program2 {
         list.delete(9);
         list.delete(4);
         list.indexOf(4);
+
+        MyLinkedList<String> list2 = new MyLinkedList<>();
+        list2.insertAtBeginning("Mahesh");
+        list2.insertAtBeginning("Parvati");
+        list2.printForward();
+        list2.insertAtEnd("Ram");
+        list2.insertAtEnd("Sita");
+        list2.insertAtEnd("Ganesh");
+        list2.insert("Vishnu", 0);
+        list2.insert("Laxmi", 1);
+        list2.insert("Shiv", 2);
+        list2.insert("Laxman", list2.size());
+        list2.delete("Mahesh");
+        list2.printForward();
+        System.out.println("Shiv is located at "+list2.indexOf("Shiv")+" index of list");
+        list2.reverse();
+        list2.printForward();
+        list2.printBackward();
     }
 }
