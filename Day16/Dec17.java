@@ -213,10 +213,7 @@ public class Dec17 {
             return 2;
          }else if(str.equals("^")){
             return 3;
-         }else if(str.equals("(") || str.equals(")")){
-            return 0;
          }
-
         return -1;
     }
 
@@ -224,27 +221,106 @@ public class Dec17 {
        return str.equals("^");
     } 
     
+    public static int calculator(int a,int b ,String op){
+        int res = -1;
+        switch (op) {
+            case "+":
+                 res = a+b;
+                break;
+              case "-":
+                res = a-b;
+                break;
+                 case "*":
+                 res = a*b;
+                break;
+              case "/":
+                if(b != 0){
+                res = a/b;
+                }else{
+                    throw new ArithmeticException("Divide by zero");
+                }
+                break;
+                 case "^":
+                 res = (int)Math.pow(a, b);
+                break;
+              case "%":
+                 if(b != 0){
+                res = a%b;
+                }else{
+                    throw new ArithmeticException("Divide by zero");
+                }
+                break;
+            default:
+                throw new RuntimeException("Invalid opertaor ");
+        }
+        return res;
+    }
+
+    public static void applyTopOperator(ArrayDeque<Integer> operand,ArrayDeque<String> operator){
+        if(operand.size()<2){
+            throw new RuntimeException("Invalid Expression ");
+        }
+
+         String op = operator.pop();
+         int b = operand.pop();
+        int a = operand.pop();
+         operand.push(calculator(a, b, op));
+    }
+
+    public static boolean isOperator(String op){
+        return "+-*/^%".contains(op);
+    }
+
     public static int evaluator(String[] expr){
-           if(expr.length == 0){
-            return 0;
+           if(expr == null ||expr.length == 0){
+            throw new RuntimeException("Invalid Expression ");
            }
 
            ArrayDeque<Integer> operand = new ArrayDeque<>();
            ArrayDeque<String> operator = new ArrayDeque<>();
+
            for(int i=0;i<expr.length;i++){
               String str = expr[i];
-              if(str.matches("-?\\d+")){
+              if(str.matches("\\d+")){
                 operand.push(Integer.parseInt(str));
               }else{
-                   if(str.equals(")")){
-                      while (!operator.isEmpty() && ) {
-                        
+                  if(str.equals("(")){
+                      operator.push(str);
+                  }else if(str.equals("-") && (i == 0 || expr[i-1].equals("(") || isOperator(expr[i-1])) ){
+                       operand.push(0);
+                       operator.push(str);
+                  }else if(str.equals(")")){
+                      while (!operator.isEmpty() && !operator.peek().equals("(") ) {
+                       applyTopOperator(operand, operator);
                       }
+                      if(operator.isEmpty()){
+                          throw new RuntimeException("Mismatched Parenthesis ");
+                      }
+                      operator.pop();
+                   }else if(isOperator(str)){
+                      while (!operator.isEmpty() && !operator.peek().equals("(") && ((isRightAssociative(str) && precedence(str)<precedence(operator.peek())) || (!isRightAssociative(str) && precedence(str)  <= precedence(operator.peek())))) {
+                         applyTopOperator(operand, operator);
+                      }
+                      operator.push(str);
                    }else{
-                    operator.push(str);
+                    throw new RuntimeException("Invalid Expression ");
                    }
               }
            }
+           
+           while (!operator.isEmpty()) {
+                   if (operator.peek().equals("(")) {
+                   throw new RuntimeException("Mismatched Parenthesis");
+               }
+
+               applyTopOperator(operand, operator);
+           }
+           
+           if(operand.size() != 1){
+            throw new RuntimeException("Invalid Expression");
+           }
+
+           return operand.pop();
     }
     public static void main(String[] args) {
         // Verify the correctness of nested folder paths in a file manager using stack.
@@ -273,6 +349,34 @@ public class Dec17 {
              print(collide(arr3)); 
 
             //  Design an expression evaluator for an online billing system using two stacks.
+            String[] expr1 = {"-","5"};
+            System.out.println(evaluator(expr1));
+            String[] expr2 = {"(","-","3",")"};
+                System.out.println(evaluator(expr2));
+            String[] expr3 = {"(","-","1",")","+","2"};
+                System.out.println(evaluator(expr3));
+            String[] expr4 = {"-","3","+","5"};
+              System.out.println(evaluator(expr4));
+            String[] expr5 = {"2","*","-","4"};
+                  System.out.println(evaluator(expr5));
+            String[] expr6 = {"-","2","*","3"};
+                System.out.println(evaluator(expr6));
+            String[] expr7 = {"(","(","-","3",")",")"};
+                  System.out.println(evaluator(expr7));
+            String[] expr8 = {"(","-","(","2","+","3",")",")"};
+                   System.out.println(evaluator(expr8));
+            String[] expr9 = {"3","+","5","*","2"};
+                  System.out.println(evaluator(expr9));
+            String[] expr10 = {"(","3","+","5",")","*","2"};
+                  System.out.println(evaluator(expr10));
+            String[] expr11 = {"8","/","2","+","3"};
+                 System.out.println(evaluator(expr11));
+            String[] expr12 = {"10","%","3","+","1"};
+                     System.out.println(evaluator(expr12));
+            String[] expr13 = {"2","^","3"};
+                System.out.println(evaluator(expr13));
+            String[] expr14 = {"2","^","3","^","2"};
+                 System.out.println(evaluator(expr14));
 
     }
 }
