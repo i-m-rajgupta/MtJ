@@ -111,12 +111,81 @@ public class Dec19 {
        }
        System.out.println();
     }
+
+   static class MyQueue2{
+        private int[] queue ;
+        private final int capacity;
+        private int front ,rear;
+
+        MyQueue2(int n){
+            capacity = n;
+            queue = new int[n];
+            front = 0;
+            rear = 0;
+        }
+
+        public boolean isEmpty(){
+            return rear == front;
+        }
+        
+        public boolean isFull(){
+            return (rear+1)%capacity == front;
+        }
+
+        public void enqueue(int data){
+             if(isFull()){
+                System.out.println("Queue is Full");
+                return;
+             }
+
+             queue[rear] = data;
+             rear = (rear+1)%capacity;
+             System.out.println(data+" Queued");
+        }
+
+        public void dequeue(){
+            if(isEmpty()){
+                System.out.println("Queue is Empty ");
+                return;
+            }
+            System.out.println(queue[front]+" Dequeued ");
+            front = (front+1)%capacity;
+        }
+
+        public int peek(){
+         if(isEmpty()){
+            System.out.println("Queue is Empty");
+            return -1;
+         }
+         return queue[front];
+        }
+
+        public void display(){
+            if(isEmpty()){
+                System.out.println("Queue is Empty ");
+                return;
+            }
+            int i = front;
+            while (i != rear) {
+                System.out.print(queue[i]+" ");
+                i = (i+1)%capacity;
+            }
+            System.out.println();
+        }
+
+    }
    public static void main(String[] args) {
     // Implement a menu-driven program for queue operations using array.
      System.out.println("Welcome to the Menu-Driven Program for Queue ");
      System.out.println("Enter the size for element storing in queue ");
      Scanner sc = new Scanner(System.in);
-     int n = sc.nextInt();
+     int n;
+     do{
+     n = sc.nextInt();
+     if(n<=0){
+     System.out.println("Enter valid size ");
+     }
+     }while(n<=0);
      MyQueue q = new MyQueue(n);
      int choice;
      do{
@@ -136,5 +205,14 @@ public class Dec19 {
      }while(choice != 0);
 
      sc.close();
+
+    //  Implement a Circular Queue using array in Java.
+    MyQueue2 q2 = new MyQueue2(5);
+    q2.enqueue(5);
+    q2.enqueue(8);
+    q2.enqueue(4);
+    q2.dequeue();
+    q2.display();
+    System.out.println(q2.peek());
    }    
 }
