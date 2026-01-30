@@ -1,6 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Dec24 {
 
@@ -113,9 +111,92 @@ public class Dec24 {
         }
     }
 
-    public class MultipleQueue{
-        private Map <String,Queue<Integer> queues;
+    public static class MultipleQueue<T>{
+        private Map<String,Queue<T>> queues;
         
+        MultipleQueue(){
+            queues = new HashMap<>();
+        }
+
+        public boolean createQueue(String name){
+             if(queues.containsKey(name)){
+                System.out.println(name+" queue already exists ");
+                return false;
+             }
+             queues.put(name, new ArrayDeque<>());
+             System.out.println("Queue "+name+" Created");
+             return true;
+        }
+        
+        public boolean deleteQueue(String name){
+           if(queues.remove(name)== null){
+            System.out.println("Queue "+name+" does not exists. ");
+            return false;
+           }
+               System.out.println("Queue "+name+" Deleted ");
+           return true;
+        }
+
+        public boolean enqueueValue(String name,T data){
+             Queue<T> temp = queues.get(name);
+             if(temp == null){
+                System.out.println(name+" does not exists . ");
+                 return false;
+             }
+             temp.offer(data);
+             System.out.println(data+" added to "+name);
+             return true;
+        }
+
+        public T dequeValue(String name){
+
+            Queue<T> temp = queues.get(name);
+            if(temp == null){
+                System.out.println("Queue "+name+" does not exists ");
+                return null;
+            }
+
+            if(temp.isEmpty()){
+                System.out.println("Queue "+name+" is empty");
+            }
+
+            T data =temp.poll();
+            System.out.println(data+" deleted from "+name);
+            return data;
+        }
+    }
+
+    static class ThreadSafeQueue<T>{
+        private int capacity;
+        private final Queue<T> queue;
+
+        ThreadSafeQueue(int capacity){
+            queue = new LinkedList<>();
+            this.capacity = capacity;
+        }
+
+        public synchronized void enqueue(T data) throws InterruptedException{
+            while (queue.size() == capacity) {
+                 wait();
+            }
+
+            queue.offer(data);
+            notifyAll();
+        }
+
+        public synchronized T dequeue() throws InterruptedException{
+           while (queue.isEmpty()) {
+               wait();
+           }
+
+           T data = queue.poll();
+           notifyAll();
+           return data;
+        }
+
+        public synchronized int size(){
+            return queue.size();
+        }
     }
     public static void main(String[] args) {
         // Write a Java program for CPU scheduling using queue.
@@ -131,6 +212,41 @@ public class Dec24 {
         bankQueue(serviceTime);
 
         //Write a Java program to handle multiple queues.
+        MultipleQueue<String> queues = new MultipleQueue<>();
+        queues.createQueue("Counter 1");
+        queues.createQueue("Counter 2");
+        queues.enqueueValue("Counter 1", "Ram");
+        queues.deleteQueue("Counter 1");
 
+        //Write a Java program to implement thread-safe queue.
+         ThreadSafeQueue<Integer> q = new ThreadSafeQueue<>(3);
+
+         Thread producer = new Thread(()->{
+            try{
+               for(int i =0;i<=10;i++){
+                q.enqueue(i);
+                System.out.println("Produced "+i);
+               }
+            }catch(InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
+         }) ;
+         producer.start();
+
+         Thread consumer = new Thread(()->{
+            try{
+                for(int i=0;i<= 10;i++){
+                    int data = q.dequeue();
+                    System.out.println("Consumed "+data);
+                }
+            }catch(InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
+         });
+         consumer.start();
+
+        //  “Why is Consumed 5 printed before Produced 5?”
+        // “Because thread scheduling is non-deterministic.
+// The item was produced before consumption, but the print statements executed in a different order.”
     }
 }
