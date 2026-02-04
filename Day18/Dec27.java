@@ -100,8 +100,10 @@ class MyBinaryTree<T extends Comparable <T>>{
              deepest = curr;
 
              if(curr.data.equals(data)){
-             if(onlyFirst && target == null){
+             if(onlyFirst){
+                if(target == null){
                 target = curr;
+                }
              }else{
                 target = curr;
              }
