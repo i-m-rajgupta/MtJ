@@ -190,6 +190,45 @@ public class Jan1 {
 
         return head;
     }
+
+       static int toSumTree(Node root) {
+        if (root == null)
+            return 0;
+
+        int leftSum = toSumTree(root.left);
+        int rightSum = toSumTree(root.right);
+
+        int oldValue = root.data;
+        root.data = leftSum + rightSum;
+
+        return root.data + oldValue;
+    }
+         
+   static class Result{
+        boolean isValid;
+        int sum ;
+        Result(boolean isValid,int sum){
+            this.isValid = isValid;
+            this.sum = sum;
+        }
+    }
+    public static Result checkSum(Node node){
+        if(node == null ){
+            return new Result(true, 0);
+        }
+
+        if(node.left == null && node.right == null){
+              return new Result(true, node.data);
+        }
+       Result leftResult = checkSum(node.left);
+       Result rightResult = checkSum(node.right);
+     
+       boolean isValid = leftResult.isValid && rightResult.isValid && (node.data == leftResult.sum+rightResult.sum);
+       return new Result(isValid, node.data+leftResult.sum+rightResult.sum);
+    }
+    public static boolean isSumTree(Node node){
+         return checkSum(node).isValid;
+    }
     public static void main(String[] args) {
         // Write a Java program to construct binary tree from inorder and preorder.
         int[] inorder = {4,2,2,1,2,3};
@@ -237,5 +276,24 @@ public class Jan1 {
         System.out.println();
 
         // Implement sum tree conversion.
+        toSumTree(head);
+        levelOrder(head);
+
+        // A tree obtained after converting a binary tree to a Sum Tree does not necessarily satisfy the Sum
+        //  Tree validation property because conversion uses original subtree values, whereas validation checks current subtree sums.
+
+        // Write a Java program to check if binary tree is a sum tree.
+        MyBinaryTree b4 = new MyBinaryTree();
+        int preorder4[] = {26,10,4,6,3,3};
+        int inorder4[] = {4,10,6,26,3,3};
+        Node head4 = b4.constructBinaryTree(preorder4, inorder4); 
+        inorder(head4);
+        System.out.println();
+        preorder(head4);
+        System.out.println();
+        levelOrder(head4);
+
+        System.out.println(isSumTree(head4));
+
     }
 }
