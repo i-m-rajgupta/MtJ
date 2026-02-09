@@ -1,5 +1,4 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class Node{
     int data;
@@ -79,7 +78,209 @@ class Distance{
     }
 }
 
+ class BurnNode {
+         int data ;
+         BurnNode left,right,parent;
+         BurnNode(int data){
+            this.data = data;
+         } 
+            
+        }
+
+class MyBurnTree{
+       BurnNode root ;
+       MyBurnTree(){
+           root = null;
+       }
+
+       public void insertion(int data){
+        BurnNode newNode  = new BurnNode(data);
+        if(root == null){
+            root = newNode;
+            return;
+        }
+
+        Queue<BurnNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            BurnNode curr = queue.poll();
+            if(curr.left == null){
+                curr.left = newNode;
+                curr.left.parent = curr;
+                 return;
+            }else{
+                queue.offer(curr.left);
+            }
+
+            if(curr.right == null){
+                curr.right = newNode;
+                curr.right.parent = curr;
+                return;
+            }else{
+                queue.offer(curr.right);
+            }
+        }
+       }
+
+       public void levelOrder(BurnNode node){
+        if(node == null){
+            return;
+        }
+        Queue<BurnNode> queue = new LinkedList<>();
+        queue.offer(node);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for(int i =0;i<size;i++){
+              BurnNode curr = queue.poll();
+              if(curr.parent == null){
+                System.out.print(curr.data+" ");
+              }else{
+                System.out.print(curr.data+","+curr.parent.data+" ");
+              }
+
+              if(curr.left != null){
+                queue.offer(curr.left);
+              }
+
+              if(curr.right != null){
+                queue.offer(curr.right);
+              }
+            }
+            System.out.println();
+        }
+       }
+
+        public boolean search(BurnNode node,int data){
+               if(node == null){
+                return false;
+               }
+               
+               if(node.data == data){
+                return true;
+               }
+               return search(node.left, data) || search(node.right, data);
+        }
+
+ private int burn(BurnNode target) {
+    Queue<BurnNode> queue = new LinkedList<>();
+    Set<BurnNode> visited = new HashSet<>();
+
+    queue.offer(target);
+    visited.add(target);
+
+    int time = 0;
+
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        boolean burnedThisSecond = false;
+
+        for (int i = 0; i < size; i++) {
+            BurnNode curr = queue.poll();
+
+            if (curr.left != null && !visited.contains(curr.left)) {
+                visited.add(curr.left);
+                queue.offer(curr.left);
+                burnedThisSecond = true;
+            }
+
+            if (curr.right != null && !visited.contains(curr.right)) {
+                visited.add(curr.right);
+                queue.offer(curr.right);
+                burnedThisSecond = true;
+            }
+
+            if (curr.parent != null && !visited.contains(curr.parent)) {
+                visited.add(curr.parent);
+                queue.offer(curr.parent);
+                burnedThisSecond = true;
+            }
+        }
+
+        if (burnedThisSecond) {
+            time++;
+        }
+    }
+
+    return time;
+}
+
+        public int burnTime(int Burndata){
+           if(!search(root, Burndata)){
+              System.out.println(Burndata+" not found !! ");
+              return -1;
+           }
+
+           Queue<BurnNode> queue = new LinkedList<>();
+           queue.offer(root);
+           BurnNode target = null;
+           while (target == null) {
+              BurnNode curr = queue.poll();
+              if(curr.data == Burndata){
+                target = curr;
+              }
+               if(curr.left != null){
+                queue.offer(curr.left);
+               }
+               if(curr.right != null){
+                queue.offer(curr.right);
+               }
+           }
+
+         return burn(target);
+        }
+    }
+
 public class Jan3 {
+    public static void serialize(Node node,ArrayList<String> res){
+        if(node == null){
+            res.add("null");
+            return;
+        }
+
+        res.add(String.valueOf(node.data));
+        serialize(node.left, res);
+        serialize(node.right, res);
+    }
+
+    public static Node deserialize(ArrayList<String> res){
+        if(res.get(0).equals("null")){
+            res.remove(0);
+            return null;
+        }
+        
+        String data = res.remove(0);
+         Node newNode = new Node(Integer.parseInt(data));
+        newNode.left = deserialize(res);
+        newNode.right = deserialize(res);
+        return newNode;
+    }
+
+    public static void levelOrder(Node node){
+        if(node == null){
+            return;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for(int i = 0;i<size;i++){
+            Node curr = queue.poll();
+             System.out.print(curr.data +" ");
+             if(curr.left != null){
+                queue.offer(curr.left);
+             }    
+
+             if(curr.right != null){
+                queue.offer(curr.right);
+             }
+        }
+        System.out.println();
+        } 
+    }
+
+    
     public static void main(String[] args) {
         // Write a Java program to find distance between two nodes.
          MyBinaryTree b = new MyBinaryTree();
@@ -88,11 +289,31 @@ public class Jan3 {
          b.insertion(7);
          b.insertion(6);
          b.insertion(5);
+         b.insertion(4);
+         b.insertion(3);
       System.out.println(  Distance.findDistance(b.root, 9, 5));
 
-      
+    //   Implement serialize and deserialize a binary tree.
+    // Serialize → convert a tree into a string (or list) so it can be stored or sent over a network
+// Deserialize → convert that string back into the exact same tree structure
 
+     ArrayList<String> serialize = new ArrayList<>();
+     serialize(b.root, serialize);
+     System.out.println(serialize);
+    Node node = deserialize(serialize);
+      levelOrder(node);
 
+// Write a Java program to burning tree problem.
+     MyBurnTree b2 = new MyBurnTree();
+     b2.insertion(8);
+     b2.insertion(7);
+     b2.insertion(3);
+     b2.insertion(5);
+     b2.insertion(4);
+     b2.insertion(3);
+     b2.levelOrder(b2.root);
+   System.out.println(b2.burnTime(3));
 
+//    Implement convert binary tree to BST.
     }
 }
