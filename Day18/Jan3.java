@@ -231,6 +231,84 @@ class MyBurnTree{
         }
     }
 
+    class MyBST{
+       private static ArrayList<Integer> arr = new ArrayList<>();
+        private static void binaryToArr(Node node){
+              if(node == null){
+                return;
+              }
+
+              binaryToArr(node.left);
+              arr.add(arr.size(),node.data);
+              binaryToArr(node.right);
+        }
+
+        private static void arrToBst(Node node){
+            if(node == null){
+                return;
+            }
+
+            arrToBst(node.left);
+            node.data = arr.remove(0);
+            arrToBst(node.right);
+        }
+
+        public static void binaryToBst(Node node){
+            if(node == null){
+                return;
+            }
+
+            binaryToArr(node);
+            Collections.sort(arr);
+            arrToBst(node);
+        }
+    }
+
+   class MyLargestBst{
+     static class Info{
+        boolean isBst;
+        int min,max,size;
+
+        Info(boolean isBst,int min,int max,int size){
+            this.isBst = isBst;
+            this.min = min;
+            this.max = max;
+            this.size = size;
+        }
+     }
+
+     private static int maxBst = 0;
+    private  static Info largestBst(Node node){
+        if(node == null){
+            return new Info(true, Integer.MAX_VALUE, Integer.MIN_VALUE, 0);
+        }
+
+       Info leftInfo = largestBst(node.left);
+        Info rightInfo = largestBst(node.right);
+        Info currInfo = new Info(false, 0, 0, 0);
+       if(leftInfo.isBst && rightInfo.isBst && node.data > leftInfo.max && node.data < rightInfo.min){
+        currInfo.isBst = true;
+        currInfo.min = Math.min(leftInfo.min, node.data);
+        currInfo.max = Math.max(rightInfo.max, node.data);
+        currInfo.size = leftInfo.size+rightInfo.size+1;
+
+        maxBst = Math.max(maxBst, currInfo.size);
+       }else{
+        currInfo.min = Integer.MIN_VALUE;
+        currInfo.max = Integer.MAX_VALUE;
+        currInfo.size = Math.max(leftInfo.size, rightInfo.size);
+       }
+
+       return currInfo;
+     }
+
+     public static int maxBst(Node node){
+        maxBst = 0;
+        largestBst(node);
+        return maxBst;
+     }
+    
+    }
 public class Jan3 {
     public static void serialize(Node node,ArrayList<String> res){
         if(node == null){
@@ -315,5 +393,18 @@ public class Jan3 {
    System.out.println(b2.burnTime(3));
 
 //    Implement convert binary tree to BST.
+     MyBinaryTree b3 = new MyBinaryTree();
+     b3.insertion(8);
+      b3.insertion(9);
+       b3.insertion(7);
+        b3.insertion(6);
+         b3.insertion(5);
+          b3.insertion(3);
+           levelOrder(b3.root);
+     MyBST.binaryToBst(b3.root);
+    levelOrder(b3.root);
+
+    System.out.println(MyLargestBst.maxBst(b3.root));
+
     }
 }
