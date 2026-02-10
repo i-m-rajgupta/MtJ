@@ -127,6 +127,5 @@ System.out.println(students);
         employee2.sort(Comparator.comparing((Employee2 e) -> e.department).thenComparing(e -> e.name) );
         employee2.forEach(System.out::println);
 
-    //  
     }
 }
