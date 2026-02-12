@@ -185,7 +185,6 @@ class MinimumPlatform{
             return -1;
         }
 
-        int platform =1;
         ArrayList<Train> trainList = new ArrayList<>();
         for(int i = 0;i<arrivalTime.length;i++){
            trainList.add(new Train(arrivalTime[i], departureTime[i]));
