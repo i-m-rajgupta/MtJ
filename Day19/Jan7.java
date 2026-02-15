@@ -146,7 +146,8 @@ public class Jan7 {
         pq.offer(new Node(e.getKey(),e.getValue()));
        }
 
-       if(pq.peek().freq > n/2 || pq.peek().freq >((n+1)/2)){
+       if(pq.peek().freq >((n+1)/2)){
+        System.out.println("Rearrange not possible");
          return;
        }
 
@@ -195,10 +196,7 @@ public class Jan7 {
         }
 
         Arrays.sort(meetings,Comparator.comparing((Meeting m)->m.start).thenComparing((Meeting m)->m.finish));
-         for(int i =0;i<start.length;i++){
-         System.out.println(meetings[i]);
-        }
-        int rooms =1;
+         
         PriorityQueue<Integer> ends = new PriorityQueue<>();
         ends.offer(meetings[0].finish);
         for(int i=1;i<meetings.length;i++){
