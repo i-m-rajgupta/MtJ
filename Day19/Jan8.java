@@ -1,4 +1,3 @@
-import java.security.KeyStore.Entry;
 import java.util.*;
 public class Jan8 {
     public static int maxProfit(int []stocks){
@@ -27,7 +26,7 @@ public class Jan8 {
     }
 
     public static int minTap(int n,int range[]){
-        int maxReach[] = new int[n];
+        int maxReach[] = new int[n+1];
         for(int i = 0;i<range.length;i++){
             int left = Math.max(0, i-range[i]);
             int right = Math.min(n,i+range[i]);
@@ -37,13 +36,13 @@ public class Jan8 {
         int farthest =0,currentEnd =0;
         int taps = 0;
         for(int i =0;i<maxReach.length;i++){
-            farthest = Math.max(farthest, maxReach[i]);
-
-            if(farthest <= i){
+          
+            if(i > farthest){
                 return -1;
             }
 
-            if(currentEnd == i){
+              farthest = Math.max(farthest, maxReach[i]);
+            if(currentEnd == i && i != n){
                 currentEnd=farthest;
                 taps++;
             }
@@ -94,7 +93,7 @@ public class Jan8 {
         }
 
         public int compareTo(Employee e){
-            return (int)( this.ratio - e.ratio);
+            return Double.compare(ratio, e.ratio);
         }
 
         public String toString(){
@@ -142,6 +141,33 @@ double totalQuality = 0,minCost = Double.MAX_VALUE;
    }
        return minCost;
     }
+
+    public static int gasStart(int cost[],int gas[]){
+        if(gas.length == 0 || gas.length != cost.length){
+            return -1;
+        }
+
+        int sumGas =0,sumCost = 0;
+        int tank =0,start=0;
+        for(int i =0;i<gas.length;i++){
+         sumGas += gas[i];
+         sumCost += cost[i];
+         tank += gas[i] - cost[i];
+  
+         if(tank<0){
+         start = i+1;
+         tank = 0;
+         }
+        }
+
+        if(sumGas < sumCost){
+            System.out.println("Available gas is insufficient to complete the ride ");
+            return -1;
+        }
+
+        return start;
+
+    }
     public static void main(String[] args) {
         // Implement buy and sell stock to maximize profit (multiple transactions).
         int stock[] = {12,26,86,78,69};
@@ -171,5 +197,10 @@ double totalQuality = 0,minCost = Double.MAX_VALUE;
     int wage[] = {70,50,30};
      int k =2 ;
     System.out.println( minimumSalary(quality, wage, k));
+
+    // Implement gas station circular tour problem.
+    int gas[] = {1,2,3,4,5};
+    int cost[] = {3,1,4,2,5};
+    System.out.println(gasStart(cost, gas));
     }
 }
