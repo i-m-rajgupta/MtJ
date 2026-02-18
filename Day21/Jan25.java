@@ -20,12 +20,12 @@ class MyBinarySearchTree{
             return node;
         }
 
-        if(node.data < data){
+        if(node.data > data){
             node.left = insertion(node.left,data);
         }else{
             node.right = insertion(node.right,data);
         }
-        return root;
+        return node;
     }
 
     public void insertion(int data){
@@ -41,16 +41,74 @@ class MyBinarySearchTree{
         System.out.print(node.data+" ");
         inorder(node.right);
     }
+
+    public Node search(Node node,int data){
+        if(node == null){
+            return null;
+        }
+
+        if(node.data>data){
+          return search(node.left, data);
+        }else if(node.data<data){
+           return search(node.right, data);
+        }
+
+        return node;
+    }
+    private Node inorderSuccessor(Node node){
+          while (node.left != null) {
+            node = node.left;
+          }
+          return node;
+    }
+    private Node delete(Node node,int data){
+       if(node.data > data){
+           node.left = delete(node.left, data);
+       }else if(node.data < data){
+        node.right = delete(node.right, data);
+       }else{
+           if(node.left == null && node.right == null){
+            return null;
+           }
+           if(node.left == null){
+            return node.right;
+           }
+           if(node.right == null){
+            return node.left;
+           }
+
+           Node isNode = inorderSuccessor(node.right);
+           node.data = isNode.data;
+            node.right = delete(node.right, isNode.data);
+       }
+
+       return node;
+    }
+    public int delete(int data){
+        Node res = search(root, data);
+       if(res == null){
+        System.out.println(data+"not exists in the binary tree ");
+        return -1;
+       }
+     root =  delete(root,data);
+       return data;
+    }
 }
 public class Jan25 {
  public static void main(String[] args) {
     // Implement insertion in a Binary Search Tree.
     MyBinarySearchTree b1 = new MyBinarySearchTree();
-    b1.insertion(8);
+    b1.insertion(13);
     b1.insertion(4);
+    b1.insertion(11);
     b1.insertion(7);
-    // b1.insertion(9);
-    System.out.println(b1.getRoot().data);
+    b1.insertion(10);
+    b1.insertion(9);
     b1.inorder(b1.getRoot());
+
+    // Implement deletion in a BST (all 3 cases).
+    System.out.println();
+     b1.delete(9);
+        b1.inorder(b1.getRoot());
  }   
 }
