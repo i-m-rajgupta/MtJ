@@ -110,5 +110,9 @@ public class Jan25 {
     System.out.println();
      b1.delete(9);
         b1.inorder(b1.getRoot());
+        System.out.println();
+        // Implement search operation in a BST.
+       System.out.println(b1.search(b1.getRoot(), 8));
+       System.out.println(b1.search(b1.getRoot(), 10).data);
  }   
 }
