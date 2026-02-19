@@ -93,6 +93,32 @@ class MyBinarySearchTree{
      root =  delete(root,data);
        return data;
     }
+
+    public int min(){
+        if(root == null){
+            System.out.println("Tree is empty");
+            return -1;
+        }
+
+        Node node = root;
+        while (node.left != null) {
+             node = node.left;
+        }
+        return node.data;
+    }
+
+    public int max(){
+        if(root == null){
+            System.out.println("Tree is empty");
+              return -1;
+         }
+      Node node = root;
+         while (node.right != null) {
+             node = node.right;
+         }
+ 
+         return node.data;
+    }
 }
 public class Jan25 {
  public static void main(String[] args) {
@@ -114,5 +140,11 @@ public class Jan25 {
         // Implement search operation in a BST.
        System.out.println(b1.search(b1.getRoot(), 8));
        System.out.println(b1.search(b1.getRoot(), 10).data);
+
+    //    Write a program to find minimum element in BST.
+      System.out.println(b1.min());
+
+    //   Write a program to find maximum element in BST.
+     System.out.println(b1.max());
  }   
 }
