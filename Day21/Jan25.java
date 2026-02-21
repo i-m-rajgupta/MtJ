@@ -62,6 +62,9 @@ class MyBinarySearchTree{
           return node;
     }
     private Node delete(Node node,int data){
+        if(node == null){
+            return null;
+        }
        if(node.data > data){
            node.left = delete(node.left, data);
        }else if(node.data < data){
