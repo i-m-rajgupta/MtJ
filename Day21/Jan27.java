@@ -73,21 +73,47 @@ class MyBinarySearchTree{
         System.out.println();
     }
 
-    private int kSmallest(Node node,int k){
+        int result ,count;
+    private void kSmallest(Node node,int k){
         if(node == null){
-            return k--;
+            return;
         }
 
         kSmallest(node.left, k);
-        // System.out.println(k);
-        if(k == 0){
-            return node.data;
+        count++;
+        if(k == count){
+            result = node.data;
+            return ;
         }
-        return kSmallest(node.right, k);
+       kSmallest(node.right, k);
       }
     public int kSmallest(int k){
-       return kSmallest(root,k);
+       result = -1;
+       count = 0;
+        kSmallest(root,k);
+        return result;
     }
+
+    private void kLargest(Node node,int k){
+        if(node == null){
+            return;
+        }
+
+        kLargest(node.right, k);
+          count++;
+        if(count == k){
+            result = node.data;
+            return;
+        }
+        kLargest(node.left, k);
+    }
+    public int kLargest(int k){
+           result = -1;
+           count = 0;
+           kLargest(root, k);
+           return result;
+    }
+
 }
 public class Jan27 {
  public static void main(String[] args) {
@@ -108,8 +134,10 @@ public class Jan27 {
     b1.printRange(9, 13);
 
     // Print k-th smallest element in BST.
-    System.out.println(b1.kSmallest(1));
+    System.out.println(b1.kSmallest(6));
 
+    // Print k-th largest element in BST.
+     System.out.println(b1.kLargest(6));
     
  }   
 }
