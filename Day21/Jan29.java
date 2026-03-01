@@ -36,7 +36,7 @@ public class Jan29 {
        }
 
        if(node == node1){
-        
+           return node;
        }
 
     }
