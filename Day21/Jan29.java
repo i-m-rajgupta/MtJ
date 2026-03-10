@@ -26,19 +26,28 @@ class MyBST{
         return node;
     }
     public void insertion(int data){
-         insertion(root,data);
+       root =  insertion(root,data);
      }    
 }
 public class Jan29 {
     public static Node LCA(Node node,Node node1,Node node2){
-       if(node1 == null && node2 == null){
-          return null;
-       }
+      while (node != null) {
+        if(node1.data <node.data && node2.data <node.data){
+            node = node.left;
+        }else if(node1.data > node.data && node2.data > node.data){
+            node = node.right;
+        }else{
+            return node;
+        }
+      }
+   
+      return null;
+    }
 
-       if(node == node1){
-           return node;
+    public static int getFloor(Node node,int key){
+       while (node.data < key) {
+          
        }
-
     }
     public static void main(String[] args) {
         // Find lowest common ancestor (LCA) in BST.
@@ -49,6 +58,10 @@ public class Jan29 {
             b1.insertion(9);
          b1.insertion(6);
          b1.insertion(5);
+     Node root = b1.getRoot();
+      System.out.println(LCA(root, root.left, root.left).data);
+
+    //   Find floor of a given key in BST
 
 
     }
