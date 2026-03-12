@@ -61,6 +61,23 @@ public class Jan29 {
 
        return ans;
     }
+
+    public static int findCeil(Node node,int key){
+        int ceil = -1;
+        while (node != null) {
+            if(node.data == key){
+                return node.data;
+            }
+
+            if(node.data<key){
+                node = node.right;
+            }else{
+                ceil = node.data;
+                node = node.right;
+            }
+        }
+        return ceil;
+    }
     public static void main(String[] args) {
         // Find lowest common ancestor (LCA) in BST.
          MyBST b1 = new MyBST();
@@ -74,6 +91,8 @@ public class Jan29 {
       System.out.println(LCA(root, root.left, root.left).data);
 
     //   Find floor of a given key in BST
-      getFloor(root, 3);
+      System.out.println(getFloor(root, 3));
+    //   Find ceil of a given key in BST.
+      System.out.println(findCeil(root, 3));
     }
 }
